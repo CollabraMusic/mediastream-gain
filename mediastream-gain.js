@@ -1,14 +1,14 @@
 var support = require('webrtcsupport');
 
 
-function GainController(stream) {
+function GainController(stream, audioContext) {
     this.support = support.webAudio && support.mediaStream;
 
     // set our starting value
     this.gain = 1;
 
     if (this.support) {
-        var context = this.context = new support.AudioContext();
+        var context = this.context = audioContext || new support.AudioContext();
         this.microphone = context.createMediaStreamSource(stream);
         this.gainFilter = context.createGain();
         this.destination = context.createMediaStreamDestination();
